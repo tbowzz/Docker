@@ -1,9 +1,13 @@
 FROM raspbian/jessie
 LABEL maintainer="tyler@tbowdev.com"
 
-RUN apt-get update -y && \
-    apt-get install -y curl gcc g++ git libncurses5-dev libpcap-dev make && \
-    apt-get clean all
+COPY qemu-arm-static /usr/bin/qemu-arm-static
+
+RUN apt-get update -y
+
+RUN apt-get install -y curl gcc g++ git libncurses5-dev libpcap-dev make
+
+RUN apt-get clean all
 
 # build latest cmake
 ARG cmake_sources="https://cmake.org/files/v3.6/cmake-3.6.0.tar.gz"
@@ -19,4 +23,3 @@ RUN cd /opt \
  && cd .. \
  && rm -rf src
 
-RUN alias ll='ls -lh'
